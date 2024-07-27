@@ -6,8 +6,8 @@ public class EnemyWeapon : MonoBehaviour
 {
     public Transform firePointEnemy;
     public GameObject bulletEnemyPrefab;
-    private int defaultAttackSpeed = 200;
-    private int attackSpeed = 200;
+    private int defaultAttackSpeed = 2000;
+    private int attackSpeed = 2000;
 
     // Start is called before the first frame update
     void Start()
