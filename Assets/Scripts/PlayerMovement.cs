@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject soulPrefab;
     public SoulActions soulActions;
 
-    public float speed = 40f;
+    public float speed = 10f;
     private bool is_soul_spawned = false;
 
     float horizontalMove = 0f;

@@ -377,9 +377,9 @@ GameObject:
   - component: {fileID: 809732255}
   - component: {fileID: 809732254}
   - component: {fileID: 809732253}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -549,7 +549,7 @@ Transform:
   m_GameObject: {fileID: 889285721}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.488, z: 0}
+  m_LocalPosition: {x: 0, y: -0.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -580,7 +580,7 @@ Transform:
   m_GameObject: {fileID: 950007864}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.3, y: -0.6, z: 0}
+  m_LocalPosition: {x: -0.21, y: -0.86, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -770,7 +770,7 @@ MonoBehaviour:
   player: {fileID: 1171008665}
   soulPrefab: {fileID: 2900503503627403338, guid: 5b6b30a67103bb14eb694b06b8d1d4e0, type: 3}
   soulActions: {fileID: 1366945026}
-  speed: 40
+  speed: 20
 --- !u!114 &1171008668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -786,12 +786,12 @@ MonoBehaviour:
   m_JumpForce: 400
   m_CrouchSpeed: 0.36
   m_MovementSmoothing: 0.05
-  m_AirControl: 0
-  m_WhatIsGround:
+  m_AirControl: 1
+  whatIsGround:
     serializedVersion: 2
-    m_Bits: 4294967295
-  m_GroundCheck: {fileID: 889285722}
-  m_CeilingCheck: {fileID: 1721843692}
+    m_Bits: 64
+  groundCheck: {fileID: 889285722}
+  ceilingCheck: {fileID: 1721843692}
   m_CrouchDisableCollider: {fileID: 0}
   OnLandEvent:
     m_PersistentCalls:
@@ -929,7 +929,7 @@ MonoBehaviour:
   friendlySprite: {fileID: 6041843740428332341, guid: 925abd427759e104ab59c3c0b5ead4a2, type: 3}
   soulActions: {fileID: 1366945026}
   enemyTransform: {fileID: 1796562419}
-  speed: 40
+  speed: 20
 --- !u!61 &1796562416
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1102,12 +1102,12 @@ MonoBehaviour:
   m_JumpForce: 400
   m_CrouchSpeed: 0.36
   m_MovementSmoothing: 0.05
-  m_AirControl: 0
-  m_WhatIsGround:
+  m_AirControl: 1
+  whatIsGround:
     serializedVersion: 2
-    m_Bits: 4294967295
-  m_GroundCheck: {fileID: 950007865}
-  m_CeilingCheck: {fileID: 718000712}
+    m_Bits: 64
+  groundCheck: {fileID: 950007865}
+  ceilingCheck: {fileID: 718000712}
   m_CrouchDisableCollider: {fileID: 0}
   OnLandEvent:
     m_PersistentCalls:
@@ -1127,9 +1127,9 @@ GameObject:
   - component: {fileID: 1803682882}
   - component: {fileID: 1803682881}
   - component: {fileID: 1803682880}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
