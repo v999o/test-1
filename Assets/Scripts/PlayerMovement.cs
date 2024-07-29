@@ -7,7 +7,8 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController2D controller;
     public SpriteRenderer spriteRenderer;
     public Sprite originalSprite;
-    public Sprite newSprite;
+    public Sprite disabledSprite;
+    public Sprite highlightedSprite;
     private GameObject soul;
     public Transform player;
     public GameObject soulPrefab;
@@ -15,20 +16,44 @@ public class PlayerMovement : MonoBehaviour
 
     public float speed = 10f;
     private bool is_soul_spawned = false;
+    private bool is_player_highlighted = false;
 
     float horizontalMove = 0f;
     bool jump = false;
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+
+        if (other.CompareTag("Soul") & is_soul_spawned)
+        {
+            spriteRenderer.sprite = highlightedSprite;
+            is_player_highlighted = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Soul") & is_soul_spawned)
+        {
+            spriteRenderer.sprite = disabledSprite;
+            is_player_highlighted = false;
+        }
+    }
+
+
     // Update is called once per frame
     void Update()
     {
-        //GetAxisRaw выдает 1 если идем вправо, -1 если идем в лево, умножаем на скорость
-        horizontalMove = Input.GetAxisRaw("Horizontal") * speed;
-
-        //прыжок; значение аргумента GetButtonDown берется из настроек инпута проекта, где можно создать новую переменную
-        if (Input.GetButtonDown("Jump"))
+        if (!is_soul_spawned)
         {
-            jump = true;
+            //GetAxisRaw выдает 1 если идем вправо, -1 если идем в лево, умножаем на скорость
+            horizontalMove = Input.GetAxisRaw("Horizontal") * speed;
+
+            //прыжок; значение аргумента GetButtonDown берется из настроек инпута проекта, где можно создать новую переменную
+            if (Input.GetButtonDown("Jump"))
+            {
+                jump = true;
+            }
         }
 
         if(Input.GetButtonDown("Soul_activation") & !is_soul_spawned)
@@ -39,11 +64,15 @@ public class PlayerMovement : MonoBehaviour
         {
             deactivate_soul();
         }
+        if (Input.GetButtonDown("Soul_activation") & is_player_highlighted & is_soul_spawned)
+        {
+            deactivate_soul();
+        }
     }
 
     public void activate_soul()
     {
-        change_sprite(newSprite);
+        change_sprite(disabledSprite);
         soulActions.spawn_soul(player); //soulActions - это скрипт-распределитель для взаимодействия с душойs
         //spawn_soul();
         is_soul_spawned = true;
@@ -53,9 +82,17 @@ public class PlayerMovement : MonoBehaviour
     {
         change_sprite(originalSprite);
         is_soul_spawned = false;
+        is_player_highlighted = false;
         jump = false;
+        if (soul == null)
+        {
+            soul = GameObject.FindGameObjectWithTag("Soul");
+            soul.GetComponent<SoulMovement>().destroy_soul();
+            soul = null;
+        }
     }
 
+    
     /*public void spawn_soul()
     {
         //Instantiate(объект, копию которого хотим сделать, позиция объекта, ориентация объекта)
