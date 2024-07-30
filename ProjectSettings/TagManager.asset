@@ -44,3 +44,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ground
+    uniqueID: 3494701755
+    locked: 0
+  - name: Enemys
+    uniqueID: 3679341213
+    locked: 0
+  - name: Player
+    uniqueID: 623186019
+    locked: 0
+  - name: Soul
+    uniqueID: 3685659445
+    locked: 0
+  - name: Bullets
+    uniqueID: 3895524215
+    locked: 0
