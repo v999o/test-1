@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     bool is_enemy_controlled = false;
     public SoulActions soulActions;
     public Transform enemyTransform;
+    private GameObject cameraManager;
 
     public float speed = 40f;
 
@@ -27,6 +28,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        cameraManager = GameObject.FindGameObjectWithTag("CameraManager");
     }
     void SaveCurrentEnemyPosition() {
         enemy_x = gameObject.transform.position.x;
@@ -99,6 +101,7 @@ public class Enemy : MonoBehaviour
                 soul.GetComponent<SoulMovement>().destroy_soul();
                 soul = null;
             }
+            cameraManager.GetComponent<CameraTargetSwitcher>().SwitchTarget(enemyTransform);
         }
         else if (Input.GetKeyDown(KeyCode.F) & is_enemy_controlled) //выселение из врага
         {

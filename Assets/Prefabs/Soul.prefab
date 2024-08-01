@@ -137,6 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MovementSmoothing: 0.05
   rigidbody2D: {fileID: 6235376431376163523}
+  soulTransform: {fileID: 6664490875520845529}
   speed: 40
 --- !u!50 &6235376431376163523
 Rigidbody2D:

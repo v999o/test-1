@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,13 +8,20 @@ public class SoulMovement : MonoBehaviour
     [Range(0, .3f)][SerializeField] private float m_MovementSmoothing = .05f;
 
     public new Rigidbody2D rigidbody2D;
+    private GameObject cameraManager;
     private Vector3 m_Velocity = Vector3.zero;
+    public Transform soulTransform;
     public float speed = 40f;
 
     float horizontalMove = 0f;
     float verticalMove = 0f;
 
-    // Update is called once per frame
+    private void Start()
+    {
+
+        cameraManager = GameObject.FindGameObjectWithTag("CameraManager");
+        cameraManager.GetComponent<CameraTargetSwitcher>().SwitchTarget(soulTransform);
+    }
     void Update()
     {
         //GetAxisRaw выдает 1 если идем вправо, -1 если идем в лево, умножаем на скорость

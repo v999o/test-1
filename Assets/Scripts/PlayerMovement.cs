@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private GameObject soul;
     public Transform player;
     public GameObject soulPrefab;
+    private GameObject cameraManager;
     public SoulActions soulActions;
 
     public float speed = 10f;
@@ -20,6 +21,11 @@ public class PlayerMovement : MonoBehaviour
 
     float horizontalMove = 0f;
     bool jump = false;
+
+    private void Start()
+    {
+        cameraManager = GameObject.FindGameObjectWithTag("CameraManager");
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -90,6 +96,7 @@ public class PlayerMovement : MonoBehaviour
             soul.GetComponent<SoulMovement>().destroy_soul();
             soul = null;
         }
+        cameraManager.GetComponent<CameraTargetSwitcher>().SwitchTarget(player);
     }
 
     
