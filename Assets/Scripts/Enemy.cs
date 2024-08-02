@@ -29,6 +29,7 @@ public class Enemy : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         cameraManager = GameObject.FindGameObjectWithTag("CameraManager");
+        player = GameObject.FindGameObjectWithTag("Player");
     }
     void SaveCurrentEnemyPosition() {
         enemy_x = gameObject.transform.position.x;
@@ -56,7 +57,7 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
 
-        if (other.CompareTag("Soul") & !is_enemy_controlled)
+        if (other.CompareTag("Soul") && !is_enemy_controlled)
         {
             spriteRenderer.sprite = highlightedSprite;
             is_enemy_highlighted = true;
@@ -65,7 +66,7 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Soul") & !is_enemy_controlled)
+        if (other.CompareTag("Soul") && !is_enemy_controlled)
         {
             spriteRenderer.sprite = originalSprite;
             is_enemy_highlighted = false;
@@ -102,15 +103,16 @@ public class Enemy : MonoBehaviour
                 soul = null;
             }
             cameraManager.GetComponent<CameraTargetSwitcher>().SwitchTarget(enemyTransform);
+            player.GetComponent<PlayerMovement>().setIsSoulSpawned(false);
         }
         else if (Input.GetKeyDown(KeyCode.F) & is_enemy_controlled) //выселение из врага
         {
             spriteRenderer.sprite = originalSprite;
             is_enemy_controlled = false;
             soulActions.spawn_soul(enemyTransform);
-
+            player.GetComponent<PlayerMovement>().setIsSoulSpawned(true);
         }
-        if (Input.GetKeyDown(KeyCode.G) & is_enemy_controlled)
+        if (Input.GetKeyDown(KeyCode.G) & is_enemy_controlled) //мгновенное возвращение в игрока
         {
             spriteRenderer.sprite = originalSprite;
             is_enemy_controlled = false;
