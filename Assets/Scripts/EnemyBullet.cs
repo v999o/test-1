@@ -13,21 +13,31 @@ public class EnemyBullet : MonoBehaviour
         rb.velocity = transform.right * speed;
     }
 
-    void OnTriggerEnter2D(Collider2D hitInfo)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(hitInfo.name);
-        Enemy enemy = hitInfo.GetComponent<Enemy>();
-        PlayerMovement player = hitInfo.GetComponent<PlayerMovement>();
-        if (enemy != null)
+        if (other.CompareTag("Ground"))
         {
-            enemy.destroyEnemy();
             Destroy(gameObject);
         }
-        if (player != null)
+        if (other.CompareTag("Enemy"))
         {
-            player.destroyPlayer();
-            Destroy(gameObject);
+            Enemy enemy = other.GetComponent<Enemy>();
+
+            if (enemy != null)
+            {
+                enemy.destroyEnemy();
+                Destroy(gameObject);
+            }
         }
-        
+        if (other.CompareTag("Player"))
+        {
+            PlayerMovement player = other.GetComponent<PlayerMovement>();
+
+            if (player != null)
+            {
+                player.destroyPlayer();
+                Destroy(gameObject);
+            }
+        }
     }
 }
