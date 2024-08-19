@@ -10,6 +10,7 @@ TagManager:
   - VirtualCamera
   - CameraManager
   - Enemy
+  - LevelCompleteLabel
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - UI
   - Ground
   - CameraBoundaries
-  - 
+  - LevelCompleteLabel
   - 
   - 
   - 
@@ -61,4 +62,7 @@ TagManager:
     locked: 0
   - name: Bullets
     uniqueID: 3895524215
+    locked: 0
+  - name: LevelCompleteLabel
+    uniqueID: 2937860253
     locked: 0
