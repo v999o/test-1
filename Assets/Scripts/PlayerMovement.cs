@@ -15,11 +15,13 @@ public class PlayerMovement : MonoBehaviour
     public GameObject soulPrefab;
     private GameObject cameraManager;
     public SoulActions soulActions;
+    public Animator animator;
 
     public float speed = 10f;
     private bool is_soul_spawned = false;
     private bool is_player_highlighted = false;
     private bool is_player_controlled = true;
+    private bool is_animator_state_updated = false;
 
     float horizontalMove = 0f;
     bool jump = false;
@@ -57,11 +59,24 @@ public class PlayerMovement : MonoBehaviour
             //GetAxisRaw выдает 1 если идем вправо, -1 если идем в лево, умножаем на скорость
             horizontalMove = Input.GetAxisRaw("Horizontal") * speed;
 
+            if (horizontalMove != 0 && !is_animator_state_updated) {
+                animator.SetBool("isPlayerWalking", true);
+                is_animator_state_updated = true; //переменная is_animator_state_updated нужна чтобы не передавать значение каждый кадр, а только тогда, когда оно меняется (для улучшения производительности)
+
+            } else if (horizontalMove == 0 && is_animator_state_updated)
+            {
+                animator.SetBool("isPlayerWalking", false);
+                is_animator_state_updated = false;
+            }
+
             //прыжок; значение аргумента GetButtonDown берется из настроек инпута проекта, где можно создать новую переменную
             if (Input.GetButtonDown("Jump"))
             {
                 jump = true;
             }
+        } else if (is_animator_state_updated) {
+            animator.SetBool("isPlayerWalking", false);
+            is_animator_state_updated = false;
         }
 
         if (Input.GetButtonDown("Soul_activation") & is_player_controlled)
