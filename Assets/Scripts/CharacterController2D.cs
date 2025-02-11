@@ -40,7 +40,6 @@ public class CharacterController2D : MonoBehaviour
     void Update()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundcheckRadius, whatIsGround);
-
     }
 
 

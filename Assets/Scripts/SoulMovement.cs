@@ -19,8 +19,9 @@ public class SoulMovement : MonoBehaviour
     private void Start()
     {
 
-        cameraManager = GameObject.FindGameObjectWithTag("CameraManager");
-        cameraManager.GetComponent<CameraTargetSwitcher>().SwitchTarget(soulTransform);
+        /*cameraManager = GameObject.FindGameObjectWithTag("CameraManager");
+        cameraManager.GetComponent<CameraTargetSwitcher>().SwitchTarget(soulTransform);*/
+        //скрипт для следования камеры, больше не нужен
     }
     void Update()
     {

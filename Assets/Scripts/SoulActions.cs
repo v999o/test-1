@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoulActions : MonoBehaviour
+/*public class SoulActions : MonoBehaviour
 {
     public GameObject soulPrefab;
     private GameObject currentSoul;
@@ -25,4 +25,4 @@ public class SoulActions : MonoBehaviour
     {
         
     }
-}
+}*/

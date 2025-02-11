@@ -14,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
     public Transform player;
     public GameObject soulPrefab;
     private GameObject cameraManager;
-    public SoulActions soulActions;
     public Animator animator;
 
     public float speed = 10f;
@@ -22,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     private bool is_player_highlighted = false;
     private bool is_player_controlled = true;
     private bool is_animator_state_updated = false;
+    private bool isSoulActivationBlocked = false;
 
     float horizontalMove = 0f;
     bool jump = false;
@@ -29,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         cameraManager = GameObject.FindGameObjectWithTag("CameraManager");
+        soul = Instantiate(soulPrefab, transform.position + new Vector3(0, 1.5f), transform.rotation);
+        soul.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -39,6 +41,10 @@ public class PlayerMovement : MonoBehaviour
             spriteRenderer.sprite = highlightedSprite;
             is_player_highlighted = true;
         }
+        if (other.CompareTag("SoulActivationStopper"))
+        {
+            isSoulActivationBlocked = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -47,6 +53,10 @@ public class PlayerMovement : MonoBehaviour
         {
             spriteRenderer.sprite = disabledSprite;
             is_player_highlighted = false; 
+        }
+        if (other.CompareTag("SoulActivationStopper"))
+        {
+            isSoulActivationBlocked = false;
         }
     }
 
@@ -79,15 +89,11 @@ public class PlayerMovement : MonoBehaviour
             is_animator_state_updated = false;
         }
 
-        if (Input.GetButtonDown("Soul_activation") & is_player_controlled)
+        if (Input.GetButtonDown("Soul_activation") && is_player_controlled && !isSoulActivationBlocked)
         {
             activate_soul();
         }
-        if (Input.GetKeyDown(KeyCode.G) & !is_player_controlled)
-        {
-            deactivate_soul();
-        }
-        if (Input.GetButtonDown("Soul_activation") & is_player_highlighted & is_soul_spawned)
+        if ((Input.GetKeyDown(KeyCode.G) && !is_player_controlled) || (Input.GetButtonDown("Soul_activation") && is_player_highlighted & is_soul_spawned))
         {
             deactivate_soul();
         }
@@ -96,10 +102,8 @@ public class PlayerMovement : MonoBehaviour
     public void activate_soul()
     {
         change_sprite(disabledSprite);
-        print("*** activate_soul");
-        soulActions.spawn_soul(player); //soulActions - это скрипт-распределитель для взаимодействия с душойs
-        soul = GameObject.FindGameObjectWithTag("Soul");
-        //spawn_soul();
+        soul.transform.position = transform.position + new Vector3(0, 1.5f);
+        soul.SetActive(true);
         is_soul_spawned = true;
         is_player_controlled = false;
     }
@@ -112,25 +116,11 @@ public class PlayerMovement : MonoBehaviour
         jump = false;
         if (is_soul_spawned)
         {
-            if (soul == null)
-            {
-                soul = GameObject.FindGameObjectWithTag("Soul");
-            }
-            soul.GetComponent<SoulMovement>().destroy_soul();
-            soul = null;
-            
+            soul.SetActive(false);
             is_soul_spawned = false;
         }
         cameraManager.GetComponent<CameraTargetSwitcher>().SwitchTarget(player);
     }
-
-
-    /*public void spawn_soul()
-    {
-        //Instantiate(объект, копию которого хотим сделать, позиция объекта, ориентация объекта)
-        //Vector3 чтобы дуща спавнилась со сдвигом, а не на самом игроке
-        Instantiate(soulPrefab, player.position + new Vector3(0, 1.5f), player.rotation);
-    }*/
 
     public void change_sprite(Sprite sprite_to_set)
     {

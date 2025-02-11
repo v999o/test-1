@@ -4,13 +4,17 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Bullet
-  - Soul
   - Ground
-  - VirtualCamera
   - CameraManager
-  - Enemy
+  - Soul
   - LevelCompleteLabel
+  - Bullet
+  - Enemy
+  - PlatformMovementBorder
+  - DoorOpeningLimit
+  - Door
+  - LaserMovementBorder
+  - SoulActivationStopper
   layers:
   - Default
   - TransparentFX
@@ -19,8 +23,8 @@ TagManager:
   - Water
   - UI
   - Ground
-  - CameraBoundaries
-  - LevelCompleteLabel
+  - Characters
+  - Player
   - 
   - 
   - 
@@ -47,22 +51,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Ground
-    uniqueID: 3494701755
-    locked: 0
-  - name: Enemys
-    uniqueID: 3679341213
-    locked: 0
-  - name: Player
-    uniqueID: 623186019
-    locked: 0
-  - name: Soul
-    uniqueID: 3685659445
-    locked: 0
-  - name: Bullets
-    uniqueID: 3895524215
-    locked: 0
-  - name: LevelCompleteLabel
-    uniqueID: 2937860253
     locked: 0

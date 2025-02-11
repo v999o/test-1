@@ -15,7 +15,6 @@ public class Enemy : MonoBehaviour
     float enemy_y = 0f;
     bool is_enemy_highlighted = false;
     bool is_enemy_controlled = false;
-    public SoulActions soulActions;
     public Transform enemyTransform;
     public Transform pointA;
     public Transform pointB;
@@ -81,6 +80,11 @@ public class Enemy : MonoBehaviour
 
     public void destroyEnemy()
     {
+        if (is_enemy_controlled)
+        {
+            is_enemy_controlled = false;
+            player.GetComponent<PlayerMovement>().deactivate_soul();
+        }
         Destroy(gameObject);
     }
 
@@ -110,9 +114,8 @@ public class Enemy : MonoBehaviour
             if (soul == null)
             {
                 soul = GameObject.FindGameObjectWithTag("Soul");
-                soul.GetComponent<SoulMovement>().destroy_soul();
-                soul = null;
             }
+            soul.SetActive(false);
             cameraManager.GetComponent<CameraTargetSwitcher>().SwitchTarget(enemyTransform);
             player.GetComponent<PlayerMovement>().setIsSoulSpawned(false);
         }
@@ -120,7 +123,8 @@ public class Enemy : MonoBehaviour
         {
             spriteRenderer.sprite = originalSprite;
             is_enemy_controlled = false;
-            soulActions.spawn_soul(enemyTransform);
+            soul.transform.position = enemyTransform.position + new Vector3(0, 1.5f); //двигаем душу к врагу и активируем со смещением
+            soul.SetActive(true);
             player.GetComponent<PlayerMovement>().setIsSoulSpawned(true);
             CheckTargetDirection();
         }
